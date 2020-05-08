@@ -80,6 +80,12 @@ func (state *VMState) run() {
 			b := state.mem[state.nextPtr+2]
 			state.nextPtr += 3
 			set(state, a, b)
+		case opEq:
+			a := state.mem[state.nextPtr+1]
+			b := state.mem[state.nextPtr+2]
+			c := state.mem[state.nextPtr+3]
+			state.nextPtr += 4
+			eq(state, a, b, c)
 		case opJmp:
 			a := state.mem[state.nextPtr+1]
 			state.nextPtr += 2 // For consistency only

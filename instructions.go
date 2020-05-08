@@ -39,6 +39,16 @@ func set(state *VMState, a, b uint16) {
 	state.writeToRegister(a, b)
 }
 
+func eq(state *VMState, a, b, c uint16) {
+	b = state.resolveIfRegister(b)
+	c = state.resolveIfRegister(c)
+	if b == c {
+		state.writeToRegister(a, 1)
+	} else {
+		state.writeToRegister(a, 0)
+	}
+}
+
 func jmp(state *VMState, a uint16) {
 	a = state.resolveIfRegister(a)
 	state.nextPtr = a

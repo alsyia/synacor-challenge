@@ -155,6 +155,10 @@ func (state *VMState) run() {
 			a := state.mem[state.nextPtr+1]
 			state.nextPtr += 2
 			out(state, a)
+		case opCall:
+			a := state.mem[state.nextPtr+1]
+			state.nextPtr += 2
+			call(state, a)
 		case opNoop:
 			state.nextPtr++
 			noop(state)

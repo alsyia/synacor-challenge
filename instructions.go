@@ -119,6 +119,12 @@ func out(state *VMState, a uint16) {
 	fmt.Printf("%c", a)
 }
 
+func call(state *VMState, a uint16) {
+	a = state.resolveIfRegister(a)
+	state.pushStack(state.nextPtr)
+	state.nextPtr = a
+}
+
 func noop(state *VMState) {
 	// No op
 }

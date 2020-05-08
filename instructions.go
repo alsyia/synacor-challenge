@@ -34,7 +34,12 @@ func halt(state *VMState) {
 	os.Exit(0)
 }
 
+func jump(state *VMState) {
+
+}
+
 func out(state *VMState, a uint16) {
+	a = state.resolveIfRegister(a)
 	fmt.Printf("%c", a)
 }
 

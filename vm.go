@@ -1,6 +1,8 @@
 package main
 
-import "log"
+import (
+	"log"
+)
 
 // MemoryAddressSpaceSize is 2**(adress space width)
 const MemoryAddressSpaceSize int = 32768
@@ -19,6 +21,30 @@ type VMState struct {
 	reg7    uint16
 	stack   []uint16
 	nextPtr uint16
+}
+
+func (state *VMState) resolveIfRegister(a uint16) uint16 {
+	if a >= 32768 && a <= 32775 {
+		switch a {
+		case 32768:
+			return state.reg0
+		case 32769:
+			return state.reg1
+		case 32770:
+			return state.reg2
+		case 32771:
+			return state.reg3
+		case 32772:
+			return state.reg4
+		case 32773:
+			return state.reg5
+		case 32774:
+			return state.reg6
+		case 32775:
+			return state.reg7
+		}
+	}
+	return a
 }
 
 func (state *VMState) run() {

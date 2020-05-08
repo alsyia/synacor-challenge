@@ -108,6 +108,12 @@ func or(state *VMState, a, b, c uint16) {
 	state.writeToRegister(a, b|c)
 }
 
+func not(state *VMState, a, b uint16) {
+	b = state.resolveIfRegister(b)
+	// Can't do ^b because we want a 15-bits NOT so we clear the first bit of a 16 bits XOR mask
+	state.writeToRegister(a, 0b0111111111111111^b)
+}
+
 func out(state *VMState, a uint16) {
 	a = state.resolveIfRegister(a)
 	fmt.Printf("%c", a)

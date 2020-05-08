@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/binary"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -38,7 +37,7 @@ func loadBinary(state *VMState, path string) {
 			log.Fatalf("Found number higher than 32775 at %v address", memoryAddress+1)
 		}
 		// Store instruction in memory
-		state.memory[memoryAddress] = entry
+		state.mem[memoryAddress] = entry
 		memoryAddress++
 	}
 }
@@ -46,6 +45,6 @@ func loadBinary(state *VMState, path string) {
 func main() {
 	state := &VMState{}
 	loadBinary(state, "./challenge.bin")
-
-	fmt.Printf("%+v", state)
+	log.Println("Loaded ./challenge.bin in memory")
+	run(state)
 }

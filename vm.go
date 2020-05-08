@@ -108,6 +108,12 @@ func (state *VMState) run() {
 			c := state.mem[state.nextPtr+3]
 			state.nextPtr += 4
 			eq(state, a, b, c)
+		case opGt:
+			a := state.mem[state.nextPtr+1]
+			b := state.mem[state.nextPtr+2]
+			c := state.mem[state.nextPtr+3]
+			state.nextPtr += 4
+			gt(state, a, b, c)
 		case opJmp:
 			a := state.mem[state.nextPtr+1]
 			state.nextPtr += 2 // For consistency only

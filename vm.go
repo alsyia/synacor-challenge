@@ -163,6 +163,16 @@ func (state *VMState) run() {
 			b := state.mem[state.nextPtr+2]
 			state.nextPtr += 3
 			not(state, a, b)
+		case opRmem:
+			a := state.mem[state.nextPtr+1]
+			b := state.mem[state.nextPtr+2]
+			state.nextPtr += 3
+			rmem(state, a, b)
+		case opWmem:
+			a := state.mem[state.nextPtr+1]
+			b := state.mem[state.nextPtr+2]
+			state.nextPtr += 3
+			wmem(state, a, b)
 		case opOut:
 			a := state.mem[state.nextPtr+1]
 			state.nextPtr += 2

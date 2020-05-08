@@ -126,6 +126,17 @@ func not(state *VMState, a, b uint16) {
 	state.writeToRegister(a, 0b0111111111111111^b)
 }
 
+func rmem(state *VMState, a, b uint16) {
+	b = state.resolveIfRegister(b)
+	state.writeToRegister(a, state.mem[b])
+}
+
+func wmem(state *VMState, a, b uint16) {
+	a = state.resolveIfRegister(a)
+	b = state.resolveIfRegister(b)
+	state.mem[a] = b
+}
+
 func out(state *VMState, a uint16) {
 	a = state.resolveIfRegister(a)
 	fmt.Printf("%c", a)

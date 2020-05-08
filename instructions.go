@@ -39,6 +39,22 @@ func jmp(state *VMState, a uint16) {
 	state.nextPtr = a
 }
 
+func jt(state *VMState, a uint16, b uint16) {
+	a = state.resolveIfRegister(a)
+	if a != 0 {
+		b = state.resolveIfRegister(b)
+		state.nextPtr = b
+	}
+}
+
+func jf(state *VMState, a uint16, b uint16) {
+	a = state.resolveIfRegister(a)
+	if a == 0 {
+		b = state.resolveIfRegister(b)
+		state.nextPtr = b
+	}
+}
+
 func out(state *VMState, a uint16) {
 	a = state.resolveIfRegister(a)
 	fmt.Printf("%c", a)

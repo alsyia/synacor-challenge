@@ -54,7 +54,18 @@ func (state *VMState) run() {
 			halt(state)
 		case opJmp:
 			a := state.mem[state.nextPtr+1]
+			state.nextPtr += 2 // For consistency only
 			jmp(state, a)
+		case opJt:
+			a := state.mem[state.nextPtr+1]
+			b := state.mem[state.nextPtr+2]
+			state.nextPtr += 3
+			jt(state, a, b)
+		case opJf:
+			a := state.mem[state.nextPtr+1]
+			b := state.mem[state.nextPtr+2]
+			state.nextPtr += 3
+			jf(state, a, b)
 		case opOut:
 			a := state.mem[state.nextPtr+1]
 			state.nextPtr += 2

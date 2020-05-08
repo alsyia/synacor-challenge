@@ -34,6 +34,11 @@ func halt(state *VMState) {
 	os.Exit(0)
 }
 
+func set(state *VMState, a, b uint16) {
+	b = state.resolveIfRegister(b)
+	state.writeToRegister(a, b)
+}
+
 func jmp(state *VMState, a uint16) {
 	a = state.resolveIfRegister(a)
 	state.nextPtr = a

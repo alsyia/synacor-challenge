@@ -23,9 +23,9 @@ type VMState struct {
 	nextPtr uint16
 }
 
-func (state *VMState) resolveIfRegister(a uint16) uint16 {
-	if a >= 32768 && a <= 32775 {
-		switch a {
+func (state *VMState) resolveIfRegister(val uint16) uint16 {
+	if val >= 32768 && val <= 32775 {
+		switch val {
 		case 32768:
 			return state.reg0
 		case 32769:
@@ -44,7 +44,30 @@ func (state *VMState) resolveIfRegister(a uint16) uint16 {
 			return state.reg7
 		}
 	}
-	return a
+	return val
+}
+
+func (state *VMState) writeToRegister(regAddress, value uint16) {
+	switch regAddress {
+	case 32768:
+		state.reg0 = value
+	case 32769:
+		state.reg1 = value
+	case 32770:
+		state.reg2 = value
+	case 32771:
+		state.reg3 = value
+	case 32772:
+		state.reg4 = value
+	case 32773:
+		state.reg5 = value
+	case 32774:
+		state.reg6 = value
+	case 32775:
+		state.reg7 = value
+	default:
+		log.Fatalf("Not a valid register address: %v", regAddress)
+	}
 }
 
 func (state *VMState) run() {
@@ -52,6 +75,11 @@ func (state *VMState) run() {
 		switch nextInstruction := state.mem[state.nextPtr]; nextInstruction {
 		case opHalt:
 			halt(state)
+		case opSet:
+			a := state.mem[state.nextPtr+1]
+			b := state.mem[state.nextPtr+2]
+			state.nextPtr += 3
+			set(state, a, b)
 		case opJmp:
 			a := state.mem[state.nextPtr+1]
 			state.nextPtr += 2 // For consistency only
@@ -74,7 +102,7 @@ func (state *VMState) run() {
 			state.nextPtr++
 			noop(state)
 		default:
-			log.Fatalf("Instruction not implementend yet: %v", nextInstruction)
+			log.Fatalf("Instruction not implemented yet: %v", nextInstruction)
 		}
 	}
 }

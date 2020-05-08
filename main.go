@@ -46,5 +46,5 @@ func main() {
 	state := &VMState{}
 	loadBinary(state, "./challenge.bin")
 	log.Println("Loaded ./challenge.bin in memory")
-	run(state)
+	state.run()
 }

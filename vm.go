@@ -21,7 +21,7 @@ type VMState struct {
 	nextPtr uint16
 }
 
-func run(state *VMState) {
+func (state *VMState) run() {
 	for {
 		switch nextInstruction := state.mem[state.nextPtr]; nextInstruction {
 		case opHalt:

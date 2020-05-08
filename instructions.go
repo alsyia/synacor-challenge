@@ -156,6 +156,12 @@ func ret(state *VMState) {
 	state.nextPtr = val
 }
 
+func in(state *VMState, a uint16) {
+	entry := make([]byte, 1)
+	os.Stdin.Read(entry)
+	state.writeToRegister(a, uint16(entry[0]))
+}
+
 func noop(state *VMState) {
 	// No op
 }

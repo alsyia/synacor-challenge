@@ -33,10 +33,16 @@ Before implementing all the opcodes, we need to setup our architecture properly.
 
 Since we are never going to loop over the memory and always going to access a specific integer index, I decided to implement the memory as a pre-allocated array. An hashmap could have been used but there would have been some overhead. 
 
-A 15-bit address space means 32 768 entries in our memory. Each entry is a 16-bit unsigned integer, so the type of our memory array is **[32768]uint16**.
+A 15-bit address space means 32 768 entries in our memory. Each entry is a 16-bit unsigned integer, so the type of our memory array is `[32768]uint16``.
+
 ## Registers
+
+Each register is an `uint16` variable.
 
 ## Stack
 
-Since it's unbounded, the stack will be a slice of 16-bits values with some helper methods.
+The stack is unbounded, so we can't use an array here. It will be a slice of 16-bits values `[]uint16` with some helper methods.
 
+# Execution
+
+The execution loop (`(*VMState) run()`) is straightforward: there is a next instruction pointer, initialized at zero, and each instruction is called sequentially (except if it modifies the pointer value).

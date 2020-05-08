@@ -11,7 +11,7 @@ const MemoryAddressSpaceSize int = 32768
 // and a pointer to the next instruction
 type VMState struct {
 	mem     [MemoryAddressSpaceSize]uint16
-	reg0    uint16
+	reg0    uint16 //TODO: Maybe use an array?
 	reg1    uint16
 	reg2    uint16
 	reg3    uint16
@@ -23,6 +23,7 @@ type VMState struct {
 	nextPtr uint16
 }
 
+//TODO: Rename to value
 func (state *VMState) resolveIfRegister(val uint16) uint16 {
 	if val >= 32768 && val <= 32775 {
 		switch val {
@@ -68,6 +69,19 @@ func (state *VMState) writeToRegister(regAddress, value uint16) {
 	default:
 		log.Fatalf("Not a valid register address: %v", regAddress)
 	}
+}
+
+func (state *VMState) pushStack(value uint16) {
+	state.stack = append(state.stack, value)
+}
+
+func (state *VMState) popStack() uint16 {
+	if len(state.stack) == 0 {
+		log.Fatal("Can't pop from an empty stack")
+	}
+	val := state.stack[len(state.stack)-1]
+	state.stack = state.stack[:len(state.stack)-1]
+	return val
 }
 
 func (state *VMState) run() {

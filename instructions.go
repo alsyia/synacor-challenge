@@ -54,7 +54,7 @@ func jmp(state *VMState, a uint16) {
 	state.nextPtr = a
 }
 
-func jt(state *VMState, a uint16, b uint16) {
+func jt(state *VMState, a, b uint16) {
 	a = state.resolveIfRegister(a)
 	if a != 0 {
 		b = state.resolveIfRegister(b)
@@ -62,7 +62,7 @@ func jt(state *VMState, a uint16, b uint16) {
 	}
 }
 
-func jf(state *VMState, a uint16, b uint16) {
+func jf(state *VMState, a, b uint16) {
 	a = state.resolveIfRegister(a)
 	if a == 0 {
 		b = state.resolveIfRegister(b)

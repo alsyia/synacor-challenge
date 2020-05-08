@@ -102,6 +102,12 @@ func and(state *VMState, a, b, c uint16) {
 	state.writeToRegister(a, b&c)
 }
 
+func or(state *VMState, a, b, c uint16) {
+	b = state.resolveIfRegister(b)
+	c = state.resolveIfRegister(c)
+	state.writeToRegister(a, b|c)
+}
+
 func out(state *VMState, a uint16) {
 	a = state.resolveIfRegister(a)
 	fmt.Printf("%c", a)

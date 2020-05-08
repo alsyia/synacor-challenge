@@ -96,6 +96,12 @@ func add(state *VMState, a, b, c uint16) {
 	state.writeToRegister(a, (b+c)%32768)
 }
 
+func mult(state *VMState, a, b, c uint16) {
+	b = state.resolveIfRegister(b)
+	c = state.resolveIfRegister(c)
+	state.writeToRegister(a, (b*c)%32768)
+}
+
 func and(state *VMState, a, b, c uint16) {
 	b = state.resolveIfRegister(b)
 	c = state.resolveIfRegister(c)

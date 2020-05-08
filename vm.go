@@ -90,6 +90,7 @@ func (state *VMState) run() {
 		case opHalt:
 			halt(state)
 		case opSet:
+			//TODO: variadic args to a function that fetches them?
 			a := state.mem[state.nextPtr+1]
 			b := state.mem[state.nextPtr+2]
 			state.nextPtr += 3
@@ -173,10 +174,6 @@ func (state *VMState) run() {
 			b := state.mem[state.nextPtr+2]
 			state.nextPtr += 3
 			wmem(state, a, b)
-		case opOut:
-			a := state.mem[state.nextPtr+1]
-			state.nextPtr += 2
-			out(state, a)
 		case opCall:
 			a := state.mem[state.nextPtr+1]
 			state.nextPtr += 2
@@ -184,6 +181,10 @@ func (state *VMState) run() {
 		case opRet:
 			state.nextPtr += 1 // Only for consistency
 			ret(state)
+		case opOut:
+			a := state.mem[state.nextPtr+1]
+			state.nextPtr += 2
+			out(state, a)
 		case opIn:
 			a := state.mem[state.nextPtr+1]
 			state.nextPtr += 2

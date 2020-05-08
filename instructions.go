@@ -137,11 +137,6 @@ func wmem(state *VMState, a, b uint16) {
 	state.mem[a] = b
 }
 
-func out(state *VMState, a uint16) {
-	a = state.resolveIfRegister(a)
-	fmt.Printf("%c", a)
-}
-
 func call(state *VMState, a uint16) {
 	a = state.resolveIfRegister(a)
 	state.pushStack(state.nextPtr)
@@ -154,6 +149,11 @@ func ret(state *VMState) {
 	}
 	val := state.popStack()
 	state.nextPtr = val
+}
+
+func out(state *VMState, a uint16) {
+	a = state.resolveIfRegister(a)
+	fmt.Printf("%c", a)
 }
 
 func in(state *VMState, a uint16) {

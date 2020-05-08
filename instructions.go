@@ -148,6 +148,14 @@ func call(state *VMState, a uint16) {
 	state.nextPtr = a
 }
 
+func ret(state *VMState) {
+	if len(state.stack) == 0 {
+		os.Exit(0)
+	}
+	val := state.popStack()
+	state.nextPtr = val
+}
+
 func noop(state *VMState) {
 	// No op
 }

@@ -181,6 +181,9 @@ func (state *VMState) run() {
 			a := state.mem[state.nextPtr+1]
 			state.nextPtr += 2
 			call(state, a)
+		case opRet:
+			state.nextPtr += 1 // Only for consistency
+			ret(state)
 		case opNoop:
 			state.nextPtr++
 			noop(state)

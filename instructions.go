@@ -39,6 +39,16 @@ func set(state *VMState, a, b uint16) {
 	state.writeToRegister(a, b)
 }
 
+func push(state *VMState, a uint16) {
+	a = state.resolveIfRegister(a)
+	state.pushStack(a)
+}
+
+func pop(state *VMState, a uint16) {
+	val := state.popStack()
+	state.writeToRegister(a, val)
+}
+
 func eq(state *VMState, a, b, c uint16) {
 	b = state.resolveIfRegister(b)
 	c = state.resolveIfRegister(c)

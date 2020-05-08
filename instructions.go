@@ -34,8 +34,9 @@ func halt(state *VMState) {
 	os.Exit(0)
 }
 
-func jump(state *VMState) {
-
+func jmp(state *VMState, a uint16) {
+	a = state.resolveIfRegister(a)
+	state.nextPtr = a
 }
 
 func out(state *VMState, a uint16) {

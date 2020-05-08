@@ -52,10 +52,13 @@ func (state *VMState) run() {
 		switch nextInstruction := state.mem[state.nextPtr]; nextInstruction {
 		case opHalt:
 			halt(state)
+		case opJmp:
+			a := state.mem[state.nextPtr+1]
+			jmp(state, a)
 		case opOut:
-			a := state.nextPtr + 1
+			a := state.mem[state.nextPtr+1]
 			state.nextPtr += 2
-			out(state, state.mem[a])
+			out(state, a)
 		case opNoop:
 			state.nextPtr++
 			noop(state)

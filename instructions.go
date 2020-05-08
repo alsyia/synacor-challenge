@@ -60,6 +60,12 @@ func jf(state *VMState, a uint16, b uint16) {
 	}
 }
 
+func add(state *VMState, a, b, c uint16) {
+	b = state.resolveIfRegister(b)
+	c = state.resolveIfRegister(c)
+	state.writeToRegister(a, (b+c)%32768)
+}
+
 func out(state *VMState, a uint16) {
 	a = state.resolveIfRegister(a)
 	fmt.Printf("%c", a)

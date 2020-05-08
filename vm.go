@@ -94,6 +94,12 @@ func (state *VMState) run() {
 			b := state.mem[state.nextPtr+2]
 			state.nextPtr += 3
 			jf(state, a, b)
+		case opAdd:
+			a := state.mem[state.nextPtr+1]
+			b := state.mem[state.nextPtr+2]
+			c := state.mem[state.nextPtr+3]
+			state.nextPtr += 4
+			add(state, a, b, c)
 		case opOut:
 			a := state.mem[state.nextPtr+1]
 			state.nextPtr += 2
